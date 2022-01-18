@@ -21,8 +21,7 @@ exports.run = async (client, message, args, level) => {
             params: { "term": searchQuery }
         })
             .then(function (response) {
-                console.log(response.data.list);
-
+                //console.log(response.data.list);
                 const [answer] = response.data.list;
 
 		if (answer == null)
