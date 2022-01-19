@@ -12,7 +12,6 @@ exports.run = async (client, message, args, level) => {
     if (args[0] != "") {
         var searchQuery = args[0];
 
-        // Send a POST request
         axios({
             method: 'get',
             url: 'http://api.urbandictionary.com/v0/define',
@@ -43,7 +42,7 @@ exports.run = async (client, message, args, level) => {
                 if (err) {
                     message.reply({ content: `${err.status} ${err.statusText}` });
                 }
-                else if (error.reqeust) {
+                else if (error.request) {
                     message.reply({ content: `Request timed out!` });
                 }
                 else { message.reply({ content: `An unexpected error occured!` }); }

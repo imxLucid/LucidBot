@@ -12,7 +12,6 @@ exports.run = async (client, message, args, level) => {
         if (!searchQuery.startsWith("avtr_"))
             return message.reply({ content: `Invalid Avatar ID!` });
 
-        // Send a POST request
         axios({
             method: 'get',
             url: 'https://requi.dev/vrcx_search.php',
@@ -45,7 +44,7 @@ exports.run = async (client, message, args, level) => {
                 if (err) {
                     message.reply({ content: `${err.status} ${err.statusText}` });
                 }
-                else if (error.reqeust) {
+                else if (error.request) {
                     message.reply({ content: `Request timed out!` });
                 }
                 else { message.reply({ content: `An unexpected error occured!` }); }
