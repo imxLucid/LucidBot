@@ -37,7 +37,7 @@ exports.run = async (client, message, args, level) => {
                     .addFields(
                         { name: 'Avatar ID', value: avatar.id },
                         { name: 'Description', value: avatar.description },
-                        { name: 'Release Status', value: avatar.releaseStatus },
+                        //{ name: 'Release Status', value: avatar.releaseStatus },
                         { name: 'Author Name', value: avatar.authorName },
                         { name: 'Author ID', value: avatar.authorId }
                     );
