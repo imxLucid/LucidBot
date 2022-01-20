@@ -1,13 +1,7 @@
 const vrchat = require("vrchat");
-const configuration = new vrchat.Configuration({
-    username: "LucidBot",
-    password: "s9qHhfbsAVWXrBDn"
-});
+const SystemApi = new vrchat.SystemApi();
 
 exports.run = async (client, message, args, level) => {
-
-    const SystemApi = new vrchat.SystemApi(configuration);
-
     SystemApi.getCurrentOnlineUsers().then(resp => {
         console.log(`Current Online Users: ${resp.data}`);
         message.reply({ content: `VRChat Online Users: ${resp.data}` });
