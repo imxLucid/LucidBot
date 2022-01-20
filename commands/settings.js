@@ -85,7 +85,7 @@ ${array.join("\n")}`));
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: ["set", "setting", "conf"],
+  aliases: ["set", "setting"],
   permLevel: "Administrator"
 };
 
