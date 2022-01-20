@@ -33,13 +33,13 @@ exports.run = async (client, message, args, level) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ["weather"],
+    aliases: ["w"],
     permLevel: "User"
 };
 
 exports.help = {
-    name: "w",
+    name: "weather",
     category: "Miscellaneous",
-    description: "Weather Lookup",
-    usage: "w"
+    description: "Weather lookup by postal code",
+    usage: "weather"
 };

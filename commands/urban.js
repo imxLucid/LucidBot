@@ -3,6 +3,9 @@ var axios = require('axios');
 
 const trim = (str, max) => str.length > max ? `${str.slice(0, max - 3)}...` : str;
 
+const imageUrl = "https://static.wikia.nocookie.net/logopedia/images/8/82/UD_logo-01.svg/revision/latest/scale-to-width-down/664?cb=20180906220343";
+//const imageUrl = "https://justn.io/lucidbot/images/ud.png";
+
 exports.run = async (client, message, args, level) => {
 
     if (!args.length) {
@@ -22,14 +25,14 @@ exports.run = async (client, message, args, level) => {
                 //console.log(resp.data.list);
                 const [answer] = resp.data.list;
 
-                if (answer == null)
+                if (!answer)
                     return message.reply({ content: `No definition found for searchterm "${searchQuery}"!` });
 
                 const embed = new MessageEmbed()
                     .setColor('#1D2439')
                     .setTitle(answer.word)
                     .setURL(answer.permalink)
-                    .setThumbnail('https://justn.io/lucidbot/ud.png')
+                    .setThumbnail(imageUrl)
                     .addFields(
                         { name: 'Definition', value: trim(answer.definition, 1024) },
                         { name: 'Example', value: trim(answer.example, 1024) },
@@ -54,13 +57,13 @@ exports.run = async (client, message, args, level) => {
 exports.conf = {
     enabled: true,
     guildOnly: true,
-    aliases: ["urban"],
+    aliases: ["ud"],
     permLevel: "User"
 };
 
 exports.help = {
-    name: "ud",
+    name: "urban",
     category: "Miscellaneous",
     description: "Urban Dictionary Lookup",
-    usage: "ud"
+    usage: "urban"
 };
