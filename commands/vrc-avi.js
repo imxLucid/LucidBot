@@ -12,47 +12,43 @@ exports.run = async (client, message, args, level) => {
     let searchQuery = args[0];
     let image = imageUrl;
 
-        axios({
-            method: 'get',
-            url: 'https://requi.dev/vrcx_search.php',
-            headers: { "Content-Type": "application/json", "user-agent": "Daaaaave was here" },
-            params: { "searchTerm": searchQuery }
+    axios({
+        method: 'get',
+        url: 'https://requi.dev/vrcx_search.php',
+        headers: { "Content-Type": "application/json", "user-agent": "Daaaaave was here" },
+        params: { "searchTerm": searchQuery }
+    })
+        .then(resp => {
+            const [avatar] = resp.data;
+            //console.log(resp.data);
+            if (!avatar)
+                return message.reply({ content: `Avatar private or not found!` });
+
+            if (!avatar.description) avatar.description = "None";
+            if (!avatar.releaseStatus) avatar.releaseStatus = "Unknown";
+            if (!avatar.authorName) avatar.authorName = "Unknown";
+            if (!avatar.authorId) avatar.authorId = "Unknown";
+            if (avatar.thumbnailImageUrl) image = avatar.thumbnailImageUrl;
+
+            const embed = new MessageEmbed()
+                .setColor('#1D2439')
+                .setTitle(avatar.name)
+                .setImage(image)
+                .addFields(
+                    { name: 'Avatar ID', value: avatar.id },
+                    { name: 'Description', value: avatar.description },
+                    //{ name: 'Release Status', value: avatar.releaseStatus },
+                    { name: 'Author Name', value: avatar.authorName },
+                    { name: 'Author ID', value: avatar.authorId }
+                );
+            message.channel.send({ embeds: [embed] });
         })
-            .then(resp => {
-                const [avatar] = resp.data;
-                //console.log(resp.data);
-                if (!avatar)
-                    return message.reply({ content: `No results found for "${searchQuery}"!` });
-
-                if (!avatar.description) avatar.description = "None";
-                if (!avatar.releaseStatus) avatar.releaseStatus = "Unknown";
-                if (!avatar.authorName) avatar.authorName = "Unknown";
-                if (!avatar.authorId) avatar.authorId = "Unknown";
-                if (avatar.thumbnailImageUrl) image = avatar.thumbnailImageUrl;
-
-                const embed = new MessageEmbed()
-                    .setColor('#1D2439')
-                    .setTitle(avatar.name)
-                    .setImage(image)
-                    .addFields(
-                        { name: 'Avatar ID', value: avatar.id },
-                        { name: 'Description', value: avatar.description },
-                        //{ name: 'Release Status', value: avatar.releaseStatus },
-                        { name: 'Author Name', value: avatar.authorName },
-                        { name: 'Author ID', value: avatar.authorId }
-                    );
-                message.channel.send({ embeds: [embed] });
-            })
-            .catch(error => {
-                const err = error.response;
-                if (err) {
-                    message.reply({ content: `${err.status} ${err.statusText}` });
-                }
-                else if (error.request) {
-                    message.reply({ content: `Request timed out!` });
-                }
-                else { message.reply({ content: `An unexpected error occured!` }); }
-            })
+        .catch(error => {
+            const err = error.response;
+            if (err) { message.reply({ content: `${err.status} ${err.statusText}` }); }
+            else if (error.request) { message.reply({ content: `Request timed out!` }); }
+            else { message.reply({ content: `An unexpected error occured!` }); }
+        })
 };
 
 exports.conf = {

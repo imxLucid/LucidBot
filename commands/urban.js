@@ -42,12 +42,8 @@ exports.run = async (client, message, args, level) => {
             })
             .catch(error => {
                 const err = error.response;
-                if (err) {
-                    message.reply({ content: `${err.status} ${err.statusText}` });
-                }
-                else if (error.request) {
-                    message.reply({ content: `Request timed out!` });
-                }
+                if (err) { message.reply({ content: `${err.status} ${err.statusText}` }); }
+                else if (error.request) { message.reply({ content: `Request timed out!` }); }
                 else { message.reply({ content: `An unexpected error occured!` }); }
             })
     }
