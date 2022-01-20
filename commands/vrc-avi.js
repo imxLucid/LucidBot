@@ -1,16 +1,16 @@
 const { MessageEmbed } = require('discord.js');
 var axios = require('axios');
 
+const imageUrl = "https://d348imysud55la.cloudfront.net/thumbnails/946814895.1.thumbnail-256.png";
+//const imageUrl = "https://justn.io/lucidbot/images/robot.png";
+
 exports.run = async (client, message, args, level) => {
 
-    if (!args.length)
-        return message.reply({ content: `Invalid Avatar ID!` });
+    if (!args.length || !args[0].startsWith("avtr_"))
+        return message.reply({ content: `Invalid Input!` });
 
-    if (args[0] != "") {
-        let searchQuery = args[0];
-
-        if (!searchQuery.startsWith("avtr_"))
-            return message.reply({ content: `Invalid Avatar ID!` });
+    let searchQuery = args[0];
+    let image = imageUrl;
 
         axios({
             method: 'get',
@@ -21,21 +21,25 @@ exports.run = async (client, message, args, level) => {
             .then(resp => {
                 const [avatar] = resp.data;
 
-                console.log(avatar);
-
-                if (avatar == null)
+                if (!avatar)
                     return message.reply({ content: `No results found for "${searchQuery}"!` });
+
+                if (!avatar.description) avatar.description = "None";
+                if (!avatar.releaseStatus) avatar.releaseStatus = "Unknown";
+                if (!avatar.authorName) avatar.authorName = "Unknown";
+                if (!avatar.authorId) avatar.authorId = "Unknown";
+                if (avatar.thumbnailImageUrl) image = avatar.thumbnailImageUrl;
 
                 const embed = new MessageEmbed()
                     .setColor('#1D2439')
                     .setTitle(avatar.name)
-                    .setImage(avatar.thumbnailImageUrl)
+                    .setImage(image)
                     .addFields(
                         { name: 'Avatar ID', value: avatar.id },
                         { name: 'Description', value: avatar.description },
                         { name: 'Release Status', value: avatar.releaseStatus },
-                        { name: 'Author ID', value: avatar.authorId },
-                        { name: 'Author Name', value: avatar.authorName }
+                        { name: 'Author Name', value: avatar.authorName },
+                        { name: 'Author ID', value: avatar.authorId }
                     );
                 message.channel.send({ embeds: [embed] });
             })
@@ -49,9 +53,6 @@ exports.run = async (client, message, args, level) => {
                 }
                 else { message.reply({ content: `An unexpected error occured!` }); }
             })
-    }
-    else return message.reply({ content: `An unexpected error occured!` });
-
 };
 
 exports.conf = {
