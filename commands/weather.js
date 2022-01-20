@@ -7,6 +7,7 @@ exports.run = async (client, message, args, level) => {
         return message.reply({ content: `No location specified!` });
     weather.find({ search: args.join(" "), degreeType: 'F' }, function (err, result) {
         try {
+            //console.log(result[0]);
 
             var temp = result[0].current.temperature;
             var feel = result[0].current.feelslike;
