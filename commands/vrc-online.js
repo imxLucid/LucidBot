@@ -3,8 +3,7 @@ const SystemApi = new vrchat.SystemApi();
 
 exports.run = async (client, message, args, level) => {
     SystemApi.getCurrentOnlineUsers().then(resp => {
-        console.log(`Current Online Users: ${resp.data}`);
-        message.reply({ content: `VRChat Online Users: ${resp.data}` });
+        message.channel.send({ content: `VRChat Online Users: ${resp.data}` });
     });
 }
 

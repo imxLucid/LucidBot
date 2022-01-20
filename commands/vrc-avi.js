@@ -1,8 +1,10 @@
 const { MessageEmbed } = require('discord.js');
-var axios = require('axios');
+const axios = require('axios');
 
-const imageUrl = "https://d348imysud55la.cloudfront.net/thumbnails/946814895.1.thumbnail-256.png";
+const apiUrl = "https://requi.dev/vrcx_search.php";
+
 //const imageUrl = "https://justn.io/lucidbot/images/robot.png";
+const imageUrl = "https://d348imysud55la.cloudfront.net/thumbnails/946814895.1.thumbnail-256.png";
 
 exports.run = async (client, message, args, level) => {
 
@@ -14,7 +16,7 @@ exports.run = async (client, message, args, level) => {
 
     axios({
         method: 'get',
-        url: 'https://requi.dev/vrcx_search.php',
+        url: apiUrl,
         headers: { "Content-Type": "application/json", "user-agent": "Daaaaave was here" },
         params: { "searchTerm": searchQuery }
     })

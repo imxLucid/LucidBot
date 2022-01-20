@@ -1,7 +1,7 @@
 const vrchat = require("vrchat");
 
 exports.run = async (client, message, args, level) => {
-    message.reply({ content: `https://metrics.vrch.at/d/vrchat/vrchat-status\nhttps://metrics.vrch.at/d/vrchat-api-status/vrchat-api-status` });
+    message.channel.send({ content: `https://metrics.vrch.at/d/vrchat/vrchat-status\nhttps://metrics.vrch.at/d/vrchat-api-status/vrchat-api-status` });
 }
 
 exports.conf = {
