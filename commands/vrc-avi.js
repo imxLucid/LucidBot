@@ -20,7 +20,7 @@ exports.run = async (client, message, args, level) => {
         })
             .then(resp => {
                 const [avatar] = resp.data;
-
+                //console.log(resp.data);
                 if (!avatar)
                     return message.reply({ content: `No results found for "${searchQuery}"!` });
 
